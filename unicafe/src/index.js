@@ -51,16 +51,46 @@ const increaseState = (state, setState) => {
 const Phrase = ({text, num}) => (<p>{text} {num}</p>)
 
 const Statistics = ({title, goodText, goodNum,
-neutralText, neutralNum, badText, badNum}) => {
+neutralText, neutralNum, badText, badNum,
+allText, averageText, positiveText
+}) => {
+  if(goodNum === 0 && neutralNum === 0 && badNum === 0 ){
+    return(
+      <div>
+      <Title text={title}></Title>
+      <p>No feedback given</p>
+
+      </div>
+    )
+  }
+
   return(
     <div>
       <Title text={title}></Title>
       <Phrase text={goodText} num={goodNum}></Phrase>
       <Phrase text={neutralText} num={neutralNum}></Phrase>
       <Phrase text={badText} num={badNum}></Phrase>
+
+      <Phrase text="all" num={sumStates(goodNum, neutralNum, badNum)}></Phrase>
+      <Phrase text="average" num={calcAverage(goodNum, neutralNum, badNum)}></Phrase>
+      <Phrase text="positive" num={calcPositive(goodNum, neutralNum, badNum)}></Phrase>
+      
     </div>
   )
 }
+
+const sumStates = ( good, neutral, bad) => {
+  return good+neutral+bad
+}
+
+const calcAverage = (g, n, b) => {
+  return (g*1+n*0+b*-1)/sumStates(g,n,b)
+}
+
+const calcPositive = (g, n, b) => {
+  return g*(100/sumStates(g,n,b)) +" %"
+}
+
 
 const App = () => {
   // save clicks of each button to its own state
@@ -70,8 +100,11 @@ const App = () => {
 
   
 
-
+  console.log(sumStates(good, neutral, bad));
+  console.log(calcAverage(good, neutral, bad));
+  console.log(calcPositive(good, neutral, bad));
   return (
+    
     <div>
     <Feedback
     title="give feedback"
