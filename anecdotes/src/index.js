@@ -7,8 +7,29 @@ const App = (props) => {
   return (
     <div>
       {props.anecdotes[selected]}
+      <br></br>
+      <Button text="next anecdote" onClick={() => setRandomAnecdote(selected, setSelected)}></Button>
     </div>
   )
+}
+
+
+const Button = ({ onClick, text }) => (
+  <button onClick={onClick}> {text}
+  </button>)
+
+const randomNum = () => {
+  return Math.floor(Math.random()*6)
+  
+}
+
+
+const setRandomAnecdote = (state, setState) => {
+  let random;
+  do {
+    random = randomNum()
+  } while (random === state)
+  setState(random)
 }
 
 const anecdotes = [
