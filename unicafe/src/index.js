@@ -1,20 +1,3 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-// import './index.css';
-// import App from './App';
-// import reportWebVitals from './reportWebVitals';
-
-// ReactDOM.render(
-//   <React.StrictMode>
-//     <App />
-//   </React.StrictMode>,
-//   document.getElementById('root')
-// );
-
-// // If you want to start measuring performance in your app, pass a function
-// // to log results (for example: reportWebVitals(console.log))
-// // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-// reportWebVitals();
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
@@ -70,6 +53,9 @@ const Statistics = ({title, goodNum,
         (goodNum === 0 && neutralNum === 0 && badNum === 0 ) &&
         <p>No feedback given</p>
       }
+
+      <table>
+      
       <Statistic text="good" value={goodNum}></Statistic>
       <Statistic text="neutral" value={neutralNum}></Statistic>
       <Statistic text="bad" value={badNum}></Statistic>
@@ -77,22 +63,30 @@ const Statistics = ({title, goodNum,
       <Statistic text="all" value={sumStates(goodNum, neutralNum, badNum)}></Statistic>
       <Statistic text="average" value={calcAverage(goodNum, neutralNum, badNum)}></Statistic>
       <Statistic text="positive" value={calcPositive(goodNum, neutralNum, badNum)}></Statistic>
+      </table>
+      
     </div>
   )
 }
 
-const Statistic = ({text, value}) => (<p>{text} {value}</p>)
+// const Statistic = ({text, value}) => (<p>{text} {value}</p>)
+const Statistic = ({text, value}) => (<tbody><tr><td>{text}</td><td>{value}</td></tr></tbody>)
+
 
 const sumStates = ( good, neutral, bad) => {
   return good+neutral+bad
 }
 
 const calcAverage = (g, n, b) => {
-  return (g*1+n*0+b*-1)/sumStates(g,n,b)
+  return toFixedDec((g*1+n*0+b*-1)/sumStates(g,n,b))
 }
 
 const calcPositive = (g, n, b) => {
-  return g*(100/sumStates(g,n,b)) +" %"
+  return toFixedDec(g*(100/sumStates(g,n,b))) +" %"
+}
+
+const toFixedDec = (num) => {
+  return Number.parseFloat(num).toFixed(2)
 }
 
 
@@ -101,12 +95,10 @@ const App = () => {
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
-
   
-
-  console.log(sumStates(good, neutral, bad));
-  console.log(calcAverage(good, neutral, bad));
-  console.log(calcPositive(good, neutral, bad));
+  // console.log(sumStates(good, neutral, bad));
+  // console.log(calcAverage(good, neutral, bad));
+  // console.log(calcPositive(good, neutral, bad));
   return (
     
     <div>
