@@ -7,14 +7,15 @@ const App = (props) => {
 
   return (
     <div>
-      {/* {selected} */}
-
+      <h1>Anecdote of the day</h1>
       {props.anecdotes[selected]}
       <br></br>
+      <Button text="vote" onClick={() => saveVotes(selected, votes, setVotes) }></Button>
       <Button text="next anecdote" onClick={() => setRandomAnecdote(selected, setSelected)}></Button>
-      <Button text="click me" onClick={() => saveVotes(selected, votes, setVotes) }></Button>
-      {/* {votes.join(" ")} */}
       <p>has {votes[selected]} votes</p>
+
+      <h1>Anecdote with most votes</h1>
+      {props.anecdotes[getMostVoted(votes)]}
     </div>
   )
 }
@@ -23,6 +24,10 @@ const saveVotes = (selected, votes, setVotes) => {
   const copy = [...votes]
   copy[selected] +=1
   setVotes(copy)
+}
+
+const getMostVoted = (arr) => {
+ return arr.indexOf(Math.max(...arr))
 }
 
 
