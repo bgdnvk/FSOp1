@@ -48,11 +48,8 @@ const increaseState = (state, setState) => {
   setState(state+1)
 } 
 
-const Phrase = ({text, num}) => (<p>{text} {num}</p>)
-
-const Statistics = ({title, goodText, goodNum,
-neutralText, neutralNum, badText, badNum,
-allText, averageText, positiveText
+const Statistics = ({title, goodNum,
+ neutralNum, badNum,
 }) => {
   if(goodNum === 0 && neutralNum === 0 && badNum === 0 ){
     return(
@@ -67,17 +64,24 @@ allText, averageText, positiveText
   return(
     <div>
       <Title text={title}></Title>
-      <Phrase text={goodText} num={goodNum}></Phrase>
-      <Phrase text={neutralText} num={neutralNum}></Phrase>
-      <Phrase text={badText} num={badNum}></Phrase>
+      {//https://reactjs.org/docs/conditional-rendering.html
+      }
+      {
+        (goodNum === 0 && neutralNum === 0 && badNum === 0 ) &&
+        <p>No feedback given</p>
+      }
+      <Statistic text="good" value={goodNum}></Statistic>
+      <Statistic text="neutral" value={neutralNum}></Statistic>
+      <Statistic text="bad" value={badNum}></Statistic>
 
-      <Phrase text="all" num={sumStates(goodNum, neutralNum, badNum)}></Phrase>
-      <Phrase text="average" num={calcAverage(goodNum, neutralNum, badNum)}></Phrase>
-      <Phrase text="positive" num={calcPositive(goodNum, neutralNum, badNum)}></Phrase>
-      
+      <Statistic text="all" value={sumStates(goodNum, neutralNum, badNum)}></Statistic>
+      <Statistic text="average" value={calcAverage(goodNum, neutralNum, badNum)}></Statistic>
+      <Statistic text="positive" value={calcPositive(goodNum, neutralNum, badNum)}></Statistic>
     </div>
   )
 }
+
+const Statistic = ({text, value}) => (<p>{text} {value}</p>)
 
 const sumStates = ( good, neutral, bad) => {
   return good+neutral+bad
